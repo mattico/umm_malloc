@@ -186,6 +186,11 @@
           } \
     }
     #define UMM_CRITICAL_EXIT()  (umm_critical_depth--)
+#elif defined(UMM_EXTERN_CRITICAL_FNS)
+    extern void _umm_critical_entry(void);
+    extern void _umm_critical_exit(void);
+    #define UMM_CRITICAL_ENTRY() _umm_critical_entry()
+    #define UMM_CRITICAL_EXIT() _umm_critical_exit()
 #else
     #define UMM_CRITICAL_ENTRY()
     #define UMM_CRITICAL_EXIT()
