@@ -229,10 +229,10 @@ static uint16_t umm_assimilate_down( uint16_t c, uint16_t freemask ) {
 
 /* ------------------------------------------------------------------------- */
 
-void umm_init( void ) {
+void umm_init(void* heap_addr, size_t heap_size) {
   /* init heap pointer and size, and memset it to 0 */
-  umm_heap = (umm_block *)UMM_MALLOC_CFG_HEAP_ADDR;
-  umm_numblocks = (UMM_MALLOC_CFG_HEAP_SIZE / sizeof(umm_block));
+  umm_heap = (umm_block *)heap_addr;
+  umm_numblocks = (heap_size / sizeof(umm_block));
   memset(umm_heap, 0x00, UMM_MALLOC_CFG_HEAP_SIZE);
 
   /* setup initial blank heap structure */
@@ -337,7 +337,9 @@ static void umm_free_core( void *ptr ) {
 void umm_free( void *ptr ) {
 
   if (umm_heap == NULL) {
-    umm_init();
+    DBGLOG_DEBUG( "umm_heap not initialized in umm_free -> do nothing\n" );
+    
+    return;
   }
 
   /* If we're being asked to free a NULL pointer, well that's just silly! */
@@ -477,7 +479,9 @@ void *umm_malloc( size_t size ) {
   void *ptr = NULL;
 
   if (umm_heap == NULL) {
-    umm_init();
+    DBGLOG_DEBUG( "umm_heap not initialized in umm_malloc -> do nothing\n" );
+    
+    return( ptr );
   }
 
   /*
@@ -518,7 +522,9 @@ void *umm_realloc( void *ptr, size_t size ) {
   size_t curSize;
 
   if (umm_heap == NULL) {
-    umm_init();
+    DBGLOG_DEBUG( "umm_heap not initialized in umm_realloc -> do nothing\n" );
+    
+    return( NULL );
   }
 
   /*

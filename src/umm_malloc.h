@@ -9,6 +9,7 @@
 #define UMM_MALLOC_H
 
 #include <stdint.h>
+#include <stddef.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -16,7 +17,7 @@ extern "C" {
 
 /* ------------------------------------------------------------------------ */
 
-extern void  umm_init( void );
+extern void  umm_init( void* heap_addr, size_t heap_size );
 extern void *umm_malloc( size_t size );
 extern void *umm_calloc( size_t num, size_t size );
 extern void *umm_realloc( void *ptr, size_t size );
