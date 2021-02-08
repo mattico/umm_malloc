@@ -50,8 +50,8 @@
 
 #include "dbglog/dbglog.h"
 
-extern void *UMM_MALLOC_CFG_HEAP_ADDR;
-extern uint32_t UMM_MALLOC_CFG_HEAP_SIZE;
+//extern void *UMM_MALLOC_CFG_HEAP_ADDR;
+//extern uint32_t UMM_MALLOC_CFG_HEAP_SIZE;
 
 /* ------------------------------------------------------------------------- */
 
@@ -233,7 +233,7 @@ void umm_init(void* heap_addr, size_t heap_size) {
   /* init heap pointer and size, and memset it to 0 */
   umm_heap = (umm_block *)heap_addr;
   umm_numblocks = (heap_size / sizeof(umm_block));
-  memset(umm_heap, 0x00, UMM_MALLOC_CFG_HEAP_SIZE);
+  memset(umm_heap, 0x00, heap_size);
 
   /* setup initial blank heap structure */
     UMM_FRAGMENTATION_METRIC_INIT();
